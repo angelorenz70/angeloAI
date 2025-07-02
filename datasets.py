@@ -19,6 +19,8 @@ class CustomDatasets:
             self.custom_sentences1 = pickle.load(f)
         with open("angeloai_dataset1.pkl", "rb") as f:
             self.custom_sentences2 = pickle.load(f)
+        with open("angeloai_additional_dataset.pkl", "rb") as f:
+            self.custom_sentences4 = pickle.load(f)
         
         self.custom_sentences3 = [
             "My name is Tseiammetse Angelo C. Rendon.",
@@ -60,7 +62,8 @@ class CustomDatasets:
         data1 = [s.split() for s in self.custom_sentences1]
         data2 = [s.split() for s in self.custom_sentences2]
         data3 = [s.split() for s in self.custom_sentences3]
-        return data1 + data2 + data3
+        data4 = [s.split() for s in self.custom_sentences4]
+        return data1 + data2 + data3 + data4
 
     def preprocess(self, data):
         return [[word.lower() for word in sentence if word.isalpha()] for sentence in data]

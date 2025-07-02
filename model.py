@@ -41,7 +41,7 @@ class AngeloAIModel:
     def summary(self):
         self.model.summary()
 
-    def train(self, epochs=100, batch_size=32, model_name_prefix='angeloai_model'):
+    def train(self, epochs=200, batch_size=32, model_name_prefix='angeloai_model'):
         early_stop = EarlyStopping(monitor='loss', patience=5, restore_best_weights=True)
         checkpoint = ModelCheckpoint(f"models/{model_name_prefix}{self.now}-best.h5", save_best_only=True)
 

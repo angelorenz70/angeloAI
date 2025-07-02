@@ -13,7 +13,7 @@ from model import AngeloAIModel
 from nltk.corpus import brown, stopwords
 from datetime import datetime
 
-model_name = 'angeloai_model2025_07_03_01_46_26-best.h5'
+model_name = 'angeloai_model2025_07_03_01_57_53-best.h5'
 model = load_model(f'models/{model_name}')
 with open('angeloai_tokenizer.pkl', 'rb') as f:
     tokenizer = pickle.load(f)
