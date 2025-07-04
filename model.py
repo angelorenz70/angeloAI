@@ -27,16 +27,29 @@ class AngeloAIModel:
         self.now = datetime.now().strftime("%Y_%m_%d_%H_%M_%S")
         self.build_model()
 
+    # def build_model(self):
+    #     model = Sequential()
+    #     model.add(Embedding(input_dim=self.vocab_size, output_dim=200, input_length=self.max_seq_length - 1))
+    #     model.add(LSTM(128, return_sequences=True))
+    #     model.add(Dropout(0.3))
+    #     model.add(LSTM(64))
+    #     model.add(Dense(self.vocab_size, activation='softmax'))
+
+    #     model.compile(loss='sparse_categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
+    #     self.model = model
     def build_model(self):
         model = Sequential()
-        model.add(Embedding(input_dim=self.vocab_size, output_dim=200, input_length=self.max_seq_length - 1))
-        model.add(LSTM(128, return_sequences=True))
+        model.add(Embedding(input_dim=self.vocab_size, output_dim=256, input_length=self.max_seq_length - 1))
+        model.add(Bidirectional(LSTM(256, return_sequences=True)))
+        model.add(Dropout(0.4))
+        model.add(LSTM(128))
         model.add(Dropout(0.3))
-        model.add(LSTM(64))
+        model.add(Dense(128, activation='relu'))
+        model.add(Dropout(0.2))
         model.add(Dense(self.vocab_size, activation='softmax'))
-
         model.compile(loss='sparse_categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
         self.model = model
+
 
     def summary(self):
         self.model.summary()
@@ -80,7 +93,7 @@ class AngeloAIModel:
         preds = exp_preds / np.sum(exp_preds)
         return np.random.choice(len(preds), p=preds)
 
-    def generate_text(self, seed_text, next_words=5, temperature=0.7):
+    def generate_text(self, seed_text, next_words=10, temperature=0.7):
         for _ in range(next_words):
             token_list = self.tokenizer.texts_to_sequences([seed_text])[0]
             token_list = pad_sequences([token_list], maxlen=self.max_seq_length - 1, padding='pre')

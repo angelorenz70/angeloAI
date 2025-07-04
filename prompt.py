@@ -13,7 +13,7 @@ from model import AngeloAIModel
 from nltk.corpus import brown, stopwords
 from datetime import datetime
 
-model_name = 'angeloai_model2025_07_03_01_57_53-best.h5'
+model_name = 'angeloai_model2025_07_04_17_21_07-best.h5'
 model = load_model(f'models/{model_name}')
 with open('angeloai_tokenizer.pkl', 'rb') as f:
     tokenizer = pickle.load(f)
@@ -34,5 +34,5 @@ while True:
     if user_input.strip().lower() == 'exit':
         print("AngeloAI: Goodbye! 👋")
         break
-    response = angelo_model.generate_text(user_input, next_words=10, temperature=0.9).strip().capitalize()
+    response = angelo_model.generate_text(user_input, next_words=20, temperature=0.9).strip().capitalize()
     print(f"AngeloAI: {response}")
